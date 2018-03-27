@@ -18,6 +18,15 @@ struct NewsItem {
   }
 }
 
+enum ItemCategory: String {
+  case World = "World"
+  case Americas = "Americas"
+  case Europe = "Europe"
+  case MiddleEast = "Middle East"
+  case Africa = "Africa"
+  case AsiaPacific = "Asia Pacific"
+}
+
 class MasterViewController: UITableViewController {
 
   var detailViewController: DetailViewController? = nil
@@ -36,6 +45,9 @@ class MasterViewController: UITableViewController {
         let controllers = split.viewControllers
         detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
     }
+    tableView.rowHeight = UITableViewAutomaticDimension
+    
+    self.navigationController?.setNavigationBarHidden(true, animated: true)
     
     loadSampleNewsItems()
   }
@@ -44,7 +56,7 @@ class MasterViewController: UITableViewController {
     clearsSelectionOnViewWillAppear = splitViewController!.isCollapsed
     super.viewWillAppear(animated)
   }
-
+  
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
@@ -53,31 +65,48 @@ class MasterViewController: UITableViewController {
   //MARK: Private Methods
   private func loadSampleNewsItems() {
     
-    let newsItem1 = NewsItem(itemCategory: "World",
+    let newsItem1 = NewsItem(itemCategory: ItemCategory.World.rawValue,
                         itemHeadline: "Climate change protests, divestments meet fossil fuels realities")
     
-    let newsItem2 = NewsItem(itemCategory: "Europe",
+    let newsItem2 = NewsItem(itemCategory: ItemCategory.Europe.rawValue,
                              itemHeadline: "Scotland's 'Yes' leader says independence vote is 'once in a lifetime'")
     
-    let newsItem3 = NewsItem(itemCategory: "Middle East",
+    let newsItem3 = NewsItem(itemCategory: ItemCategory.MiddleEast.rawValue,
                              itemHeadline: "Airstrikes boost Islamic State, FBI director warns more hostages possible")
     
-    let newsItem4 = NewsItem(itemCategory: "Africa",
+    let newsItem4 = NewsItem(itemCategory: ItemCategory.Africa.rawValue,
                              itemHeadline: "Nigeria says 70 dead in building collapse; questions S. Africa victim claim")
     
-    let newsItem5 = NewsItem(itemCategory: "Asia Pacific",
+    let newsItem5 = NewsItem(itemCategory: ItemCategory.AsiaPacific.rawValue,
                              itemHeadline: "Despite UN ruling, Japan seeks backing for whale hunting")
     
-    let newsItem6 = NewsItem(itemCategory: "Americas",
+    let newsItem6 = NewsItem(itemCategory: ItemCategory.Americas.rawValue,
                              itemHeadline: "Officials: FBI is tracking 100 Americans who fought alongside IS in Syria")
     
-    let newsItem7 = NewsItem(itemCategory: "World",
+    let newsItem7 = NewsItem(itemCategory: ItemCategory.World.rawValue,
                              itemHeadline: "South Africa in $40 billion deal for Russian nuclear reactors")
     
-    let newsItem8 = NewsItem(itemCategory: "Europe",
+    let newsItem8 = NewsItem(itemCategory: ItemCategory.Europe.rawValue,
                              itemHeadline: "One million babies' created by EU student exchanges")
 
     newsItemArray += [newsItem1, newsItem2, newsItem3, newsItem4, newsItem5, newsItem6, newsItem7, newsItem8]
+  }
+  
+  fileprivate func colorCategory(_ newsItem: NewsItem, _ newsItemTableViewCell: NewsItemTableViewCell) {
+    switch newsItem.category {
+    case ItemCategory.World.rawValue:
+      newsItemTableViewCell.categoryLabel.textColor = UIColor.red
+    case ItemCategory.Europe.rawValue:
+      newsItemTableViewCell.categoryLabel.textColor = UIColor.green
+    case ItemCategory.MiddleEast.rawValue:
+      newsItemTableViewCell.categoryLabel.textColor = UIColor.yellow
+    case ItemCategory.Africa.rawValue:
+      newsItemTableViewCell.categoryLabel.textColor = UIColor.orange
+    case ItemCategory.AsiaPacific.rawValue:
+      newsItemTableViewCell.categoryLabel.textColor = UIColor.purple
+    default: // ItemCategory.Americas
+      newsItemTableViewCell.categoryLabel.textColor = UIColor.blue
+    }
   }
   
   @objc
@@ -110,16 +139,17 @@ class MasterViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return newsItemArray.count
   }
-
+  
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     var newsItemTableViewCell = NewsItemTableViewCell()
     newsItemTableViewCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NewsItemTableViewCell
 
-//    let object = objects[indexPath.row] as! NSDate
-//    cell.textLabel!.text = object.description
     let newsItem = newsItemArray[indexPath.row]
     newsItemTableViewCell.categoryLabel.text = newsItem.category
+    
+    colorCategory(newsItem, newsItemTableViewCell)
+    
     newsItemTableViewCell.headlineLabel.text = newsItem.headline
 
     return newsItemTableViewCell
@@ -139,6 +169,13 @@ class MasterViewController: UITableViewController {
     }
   }
 
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return UITableViewAutomaticDimension
+  }
+  
+  override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    return UITableViewAutomaticDimension
+  }
 
 }
 
