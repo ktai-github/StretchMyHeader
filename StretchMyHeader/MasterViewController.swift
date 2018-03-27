@@ -22,7 +22,7 @@ class MasterViewController: UITableViewController {
 
   var detailViewController: DetailViewController? = nil
   var objects = [Any]()
-
+  
   var newsItemArray = [NewsItem]()
   
   override func viewDidLoad() {
@@ -36,6 +36,8 @@ class MasterViewController: UITableViewController {
         let controllers = split.viewControllers
         detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
     }
+    
+    loadSampleNewsItems()
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +51,7 @@ class MasterViewController: UITableViewController {
   }
 
   //MARK: Private Methods
-  private func loadSampleMeals() {
+  private func loadSampleNewsItems() {
     
     let newsItem1 = NewsItem(itemCategory: "World",
                         itemHeadline: "Climate change protests, divestments meet fossil fuels realities")
@@ -106,15 +108,21 @@ class MasterViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return objects.count
+    return newsItemArray.count
   }
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+    
+    var newsItemTableViewCell = NewsItemTableViewCell()
+    newsItemTableViewCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NewsItemTableViewCell
 
-    let object = objects[indexPath.row] as! NSDate
-    cell.textLabel!.text = object.description
-    return cell
+//    let object = objects[indexPath.row] as! NSDate
+//    cell.textLabel!.text = object.description
+    let newsItem = newsItemArray[indexPath.row]
+    newsItemTableViewCell.categoryLabel.text = newsItem.category
+    newsItemTableViewCell.headlineLabel.text = newsItem.headline
+
+    return newsItemTableViewCell
   }
 
   override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

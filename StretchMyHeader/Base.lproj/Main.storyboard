@@ -83,21 +83,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="WCw-Qf-5nD">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="WCw-Qf-5nD" customClass="NewsItemTableViewCell" customModule="StretchMyHeader" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WCw-Qf-5nD" id="37f-cq-3Eg">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U2w-nj-wHt">
-                                            <rect key="frame" x="16" y="0.0" width="288" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U2w-nj-wHt">
+                                            <rect key="frame" x="16" y="5" width="288" height="21"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                             <color key="textColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Headline" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpx-gC-gOj">
-                                            <rect key="frame" x="16" y="26" width="288" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Headline" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpx-gC-gOj">
+                                            <rect key="frame" x="16" y="27" width="288" height="11.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -107,10 +107,11 @@
                                         <constraint firstItem="U2w-nj-wHt" firstAttribute="width" secondItem="Vpx-gC-gOj" secondAttribute="width" id="6bO-yN-hhc"/>
                                         <constraint firstItem="Vpx-gC-gOj" firstAttribute="leading" secondItem="37f-cq-3Eg" secondAttribute="leading" constant="16" id="C0e-dY-t3k"/>
                                         <constraint firstAttribute="trailing" secondItem="U2w-nj-wHt" secondAttribute="trailing" constant="16" id="CGY-oM-FoC"/>
-                                        <constraint firstItem="U2w-nj-wHt" firstAttribute="top" secondItem="37f-cq-3Eg" secondAttribute="top" id="DC0-tm-RN1"/>
+                                        <constraint firstItem="U2w-nj-wHt" firstAttribute="top" secondItem="37f-cq-3Eg" secondAttribute="top" constant="5" id="DC0-tm-RN1"/>
                                         <constraint firstItem="Vpx-gC-gOj" firstAttribute="centerX" secondItem="37f-cq-3Eg" secondAttribute="centerX" id="H9W-EN-Sjv"/>
-                                        <constraint firstAttribute="bottom" secondItem="Vpx-gC-gOj" secondAttribute="bottom" constant="0.5" id="LwG-1P-flo"/>
+                                        <constraint firstAttribute="bottom" secondItem="Vpx-gC-gOj" secondAttribute="bottom" constant="5" id="LwG-1P-flo"/>
                                         <constraint firstItem="U2w-nj-wHt" firstAttribute="leading" secondItem="37f-cq-3Eg" secondAttribute="leading" constant="16" id="NW7-QA-g5M"/>
+                                        <constraint firstItem="Vpx-gC-gOj" firstAttribute="top" secondItem="U2w-nj-wHt" secondAttribute="bottom" constant="1" id="lXj-jO-3Q3"/>
                                         <constraint firstAttribute="trailing" secondItem="Vpx-gC-gOj" secondAttribute="trailing" constant="16" id="sZv-Sf-d1d"/>
                                         <constraint firstItem="U2w-nj-wHt" firstAttribute="centerX" secondItem="37f-cq-3Eg" secondAttribute="centerX" id="xQf-oV-N7x"/>
                                     </constraints>
@@ -118,6 +119,8 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="backgroundView" destination="37f-cq-3Eg" id="iGP-yM-3da"/>
+                                    <outlet property="categoryLabel" destination="U2w-nj-wHt" id="649-hK-2tc"/>
+                                    <outlet property="headlineLabel" destination="Vpx-gC-gOj" id="0j1-sp-7o7"/>
                                     <segue destination="vC3-pB-5Vb" kind="showDetail" identifier="showDetail" id="6S0-TO-JiA"/>
                                 </connections>
                             </tableViewCell>

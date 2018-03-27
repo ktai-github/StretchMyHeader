@@ -13,6 +13,7 @@
 		2CD13226206AC42400065A41 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CD13224206AC42400065A41 /* Main.storyboard */; };
 		2CD13228206AC42400065A41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CD13227206AC42400065A41 /* Assets.xcassets */; };
 		2CD1322B206AC42400065A41 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CD13229206AC42400065A41 /* LaunchScreen.storyboard */; };
+		2CD13233206ADE6200065A41 /* NewsItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD13232206ADE6200065A41 /* NewsItemTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		2CD13227206AC42400065A41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2CD1322A206AC42400065A41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2CD1322C206AC42400065A41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2CD13232206ADE6200065A41 /* NewsItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsItemTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				2CD1321E206AC42400065A41 /* AppDelegate.swift */,
 				2CD13220206AC42400065A41 /* MasterViewController.swift */,
 				2CD13222206AC42400065A41 /* DetailViewController.swift */,
+				2CD13232206ADE6200065A41 /* NewsItemTableViewCell.swift */,
 				2CD13224206AC42400065A41 /* Main.storyboard */,
 				2CD13227206AC42400065A41 /* Assets.xcassets */,
 				2CD13229206AC42400065A41 /* LaunchScreen.storyboard */,
@@ -140,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CD13223206AC42400065A41 /* DetailViewController.swift in Sources */,
+				2CD13233206ADE6200065A41 /* NewsItemTableViewCell.swift in Sources */,
 				2CD13221206AC42400065A41 /* MasterViewController.swift in Sources */,
 				2CD1321F206AC42400065A41 /* AppDelegate.swift in Sources */,
 			);
