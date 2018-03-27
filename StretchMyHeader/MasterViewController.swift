@@ -8,31 +8,15 @@
 
 import UIKit
 
-struct NewsItem {
-  let category: String
-  let headline: String
-  
-  init(itemCategory: String, itemHeadline: String) {
-    category = itemCategory
-    headline = itemHeadline
-  }
-}
-
-enum ItemCategory: String {
-  case World = "World"
-  case Americas = "Americas"
-  case Europe = "Europe"
-  case MiddleEast = "Middle East"
-  case Africa = "Africa"
-  case AsiaPacific = "Asia Pacific"
-}
 
 class MasterViewController: UITableViewController {
 
   var detailViewController: DetailViewController? = nil
   var objects = [Any]()
   
-  var newsItemArray = [NewsItem]()
+  var newsItemArray = [NewsItemModel.NewsItem]()
+  
+  var newsItemModel = NewsItemModel()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -49,7 +33,7 @@ class MasterViewController: UITableViewController {
     
     self.navigationController?.setNavigationBarHidden(true, animated: true)
     
-    loadSampleNewsItems()
+    newsItemArray = newsItemModel.loadSampleNewsItems()
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -63,51 +47,7 @@ class MasterViewController: UITableViewController {
   }
 
   //MARK: Private Methods
-  private func loadSampleNewsItems() {
-    
-    let newsItem1 = NewsItem(itemCategory: ItemCategory.World.rawValue,
-                        itemHeadline: "Climate change protests, divestments meet fossil fuels realities")
-    
-    let newsItem2 = NewsItem(itemCategory: ItemCategory.Europe.rawValue,
-                             itemHeadline: "Scotland's 'Yes' leader says independence vote is 'once in a lifetime'")
-    
-    let newsItem3 = NewsItem(itemCategory: ItemCategory.MiddleEast.rawValue,
-                             itemHeadline: "Airstrikes boost Islamic State, FBI director warns more hostages possible")
-    
-    let newsItem4 = NewsItem(itemCategory: ItemCategory.Africa.rawValue,
-                             itemHeadline: "Nigeria says 70 dead in building collapse; questions S. Africa victim claim")
-    
-    let newsItem5 = NewsItem(itemCategory: ItemCategory.AsiaPacific.rawValue,
-                             itemHeadline: "Despite UN ruling, Japan seeks backing for whale hunting")
-    
-    let newsItem6 = NewsItem(itemCategory: ItemCategory.Americas.rawValue,
-                             itemHeadline: "Officials: FBI is tracking 100 Americans who fought alongside IS in Syria")
-    
-    let newsItem7 = NewsItem(itemCategory: ItemCategory.World.rawValue,
-                             itemHeadline: "South Africa in $40 billion deal for Russian nuclear reactors")
-    
-    let newsItem8 = NewsItem(itemCategory: ItemCategory.Europe.rawValue,
-                             itemHeadline: "One million babies' created by EU student exchanges")
-
-    newsItemArray += [newsItem1, newsItem2, newsItem3, newsItem4, newsItem5, newsItem6, newsItem7, newsItem8]
-  }
   
-  fileprivate func colorCategory(_ newsItem: NewsItem, _ newsItemTableViewCell: NewsItemTableViewCell) {
-    switch newsItem.category {
-    case ItemCategory.World.rawValue:
-      newsItemTableViewCell.categoryLabel.textColor = UIColor.red
-    case ItemCategory.Europe.rawValue:
-      newsItemTableViewCell.categoryLabel.textColor = UIColor.green
-    case ItemCategory.MiddleEast.rawValue:
-      newsItemTableViewCell.categoryLabel.textColor = UIColor.yellow
-    case ItemCategory.Africa.rawValue:
-      newsItemTableViewCell.categoryLabel.textColor = UIColor.orange
-    case ItemCategory.AsiaPacific.rawValue:
-      newsItemTableViewCell.categoryLabel.textColor = UIColor.purple
-    default: // ItemCategory.Americas
-      newsItemTableViewCell.categoryLabel.textColor = UIColor.blue
-    }
-  }
   
   @objc
   func insertNewObject(_ sender: Any) {
@@ -146,9 +86,9 @@ class MasterViewController: UITableViewController {
     newsItemTableViewCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NewsItemTableViewCell
 
     let newsItem = newsItemArray[indexPath.row]
-    newsItemTableViewCell.categoryLabel.text = newsItem.category
     
-    colorCategory(newsItem, newsItemTableViewCell)
+    newsItemTableViewCell.categoryLabel.text = newsItem.category.rawValue
+    newsItemModel.colorCategory(newsItem, newsItemTableViewCell)
     
     newsItemTableViewCell.headlineLabel.text = newsItem.headline
 
