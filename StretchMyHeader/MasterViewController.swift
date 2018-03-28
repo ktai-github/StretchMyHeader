@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class MasterViewController: UITableViewController {
 
   var detailViewController: DetailViewController? = nil
@@ -17,6 +16,12 @@ class MasterViewController: UITableViewController {
   var newsItemArray = [NewsItemModel.NewsItem]()
   
   var newsItemModel = NewsItemModel()
+  
+//  will change in viewDidLoad()
+  private var kTableHeaderHeight: CGFloat = 0.0
+  
+  @IBOutlet weak var dateLabel: UILabel!
+  @IBOutlet weak var headerView: UIView!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -29,11 +34,34 @@ class MasterViewController: UITableViewController {
         let controllers = split.viewControllers
         detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
     }
+    
+//    maybe automatic row height?
     tableView.rowHeight = UITableViewAutomaticDimension
     
+//    clear and set headerview to tableview
+    headerView = tableView.tableHeaderView
+    tableView.tableHeaderView = nil
+    tableView.addSubview(headerView)
+    
+//    IMPORTANT to header not cover news items
+    kTableHeaderHeight = self.view.bounds.height/2
+    
+//    show the headerview before scrolling
+    tableView.contentInset = UIEdgeInsets(top: kTableHeaderHeight, left: 0, bottom: 0, right: 0)
+    
+//    not sure if this is needed. no change in behavior of the header and news items
+    tableView.contentOffset = CGPoint(x: 0, y: -kTableHeaderHeight)
+    
+    updateHeaderView(tableView: tableView)
+
     self.navigationController?.setNavigationBarHidden(true, animated: true)
     
     newsItemArray = newsItemModel.loadSampleNewsItems()
+    
+    let date = Date()
+    let formatter = DateFormatter()
+    formatter.dateFormat = "MMMM dd"  // format like "March 27"
+    dateLabel.text = formatter.string(from: date)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -48,6 +76,22 @@ class MasterViewController: UITableViewController {
 
   //MARK: Private Methods
   
+  func updateHeaderView(tableView: UITableView) {
+    var headerRect = CGRect(x: 0, y: -kTableHeaderHeight, width: tableView.bounds.width, height: kTableHeaderHeight)
+    
+//    change the header rect vertical origin and height according to the tableview vertical contentoffset
+//    if tableview offset is less than header height
+    if tableView.contentOffset.y < -kTableHeaderHeight {
+      headerRect.origin.y = tableView.contentOffset.y
+      headerRect.size.height = -tableView.contentOffset.y
+    }
+    headerView.frame = headerRect
+  }
+  
+//  update header view when scrolled
+  override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    updateHeaderView(tableView: tableView)
+  }
   
   @objc
   func insertNewObject(_ sender: Any) {
@@ -61,9 +105,9 @@ class MasterViewController: UITableViewController {
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "showDetail" {
         if let indexPath = tableView.indexPathForSelectedRow {
-            let object = objects[indexPath.row] as! NSDate
+//            let object = objects[indexPath.row] as! NSDate
             let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-            controller.detailItem = object
+//            controller.detailItem = object
             controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
             controller.navigationItem.leftItemsSupplementBackButton = true
         }
@@ -82,12 +126,18 @@ class MasterViewController: UITableViewController {
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
+//    custom cell
     var newsItemTableViewCell = NewsItemTableViewCell()
+    
+//    reuse cell of "Cell" identifier when loading table view cells
     newsItemTableViewCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NewsItemTableViewCell
-
+    
+//    go through each item in the array
     let newsItem = newsItemArray[indexPath.row]
     
     newsItemTableViewCell.categoryLabel.text = newsItem.category.rawValue
+    
+//    color code different categories of news
     newsItemModel.colorCategory(newsItem, newsItemTableViewCell)
     
     newsItemTableViewCell.headlineLabel.text = newsItem.headline

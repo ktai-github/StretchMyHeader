@@ -11,7 +11,7 @@ import UIKit
 class NewsItemModel: NSObject {
 
   struct NewsItem {
-    let category: NewsItemModel.ItemCategory
+    let category: NewsItemModel.ItemCategory // enum
     let headline: String
     
     init(itemCategory: NewsItemModel.ItemCategory, itemHeadline: String) {
